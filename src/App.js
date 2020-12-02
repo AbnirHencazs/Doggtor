@@ -1,5 +1,7 @@
 import React, { useState, Fragment } from 'react'
 import Formulario from './Components/Formulario'
+import Cita from './Components/Cita'
+
 function App() {
   //Arreglo de citas para listar
   const [citas, setCitas] = useState([])
@@ -11,6 +13,15 @@ function App() {
       cita
     ])
   }
+
+  //Funcion que elimina una cita por su id
+  const eliminarCita = id => {
+    const nuevasCitas = citas.filter( cita =>
+      cita.id !== id
+    )
+    setCitas(nuevasCitas);
+  }
+
   return (
     <Fragment>
       <h1>Administrador de paciente</h1>
@@ -21,7 +32,15 @@ function App() {
               crearCita={crearCita}/>
           </div>
           <div className="one-half column">
-            2
+            <h2>Administra tus citas</h2>
+            {
+              citas.map( cita => (
+                <Cita
+                  key={cita.id}
+                  cita={cita}
+                  eliminarCita={eliminarCita}/>
+              ))
+            }
           </div>
         </div>
       </div>
