@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import shortid from 'shortid';
 
-const Formulario = () => {
+const Formulario = ({ crearCita }) => {
 
     //Crear state de citas
     const [cita, setCita] = useState({
@@ -35,12 +35,15 @@ const Formulario = () => {
             setFormError(true);
             return;
         }
+
         //Eliminar mensaje previo
         setFormError(false);
+
         //asignar id
         cita.id = shortid.generate();
+
         //Crear cita
-        console.log(cita)
+        crearCita(cita)
         
         //Reiniciar el form
     }
