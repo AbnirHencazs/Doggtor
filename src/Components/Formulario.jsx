@@ -9,25 +9,48 @@ const Formulario = () => {
         fecha: '',
         hora: '',
         sintomas: ''
-    })
+    });
+
+    const [formError, setFormError] = useState(false);
 
     //Función que se ejecuta cada que el usuario escribe un input
     const handleChange = event => {
-        console.log(event.target.name)
-        console.log(event.target.value)
         setCita({
             ...cita,
             [event.target.name]: event.target.value
-        })
+        })        
     }
 
     //Extraer los valores
     const { mascota, propietario, fecha, hora, sintomas } = cita;
 
+    //Cuando el usuario manda el formulario
+    const submitCita = event => {
+        event.preventDefault()
+
+        //validar
+        if( mascota.trim() === '' || propietario.trim() === '' || fecha.trim() === '' ||
+            hora.trim() === '' || sintomas.trim() === '' ){
+            setFormError(true);
+            return;
+        }
+        //asignar id
+
+        //Crear cita
+
+        //Reiniciar el form
+    }
+
     return ( 
         <Fragment>
             <h2>Crear Cita</h2>
-            <form>
+            {
+                formError
+                ? <p className="alerta-error">Todos los campos son obligatorios</p>
+                : null
+            }
+            <form
+                onSubmit={submitCita}>
                 <label>Nombre Mascota</label>
                 <input
                     type="text"
@@ -66,7 +89,7 @@ const Formulario = () => {
                     onChange={handleChange}
                 ></textarea>
                 <button
-                    type="button"
+                    type="submit"
                     className="u-full-width button-primary">
                         Agregar cita
                 </button>
