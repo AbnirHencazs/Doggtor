@@ -5,13 +5,22 @@ import PropTypes from 'prop-types';
 
 function App() {
 
+  //Citas en local storage
+  let citasIniciales = JSON.parse(localStorage.getItem('citas'))
+  if(!citasIniciales){
+    citasIniciales = []
+  }
   //Arreglo de citas para listar
-  const [citas, setCitas] = useState([])
+  const [citas, setCitas] = useState(citasIniciales)
 
   //Use Effect para realizar ciertas operaciones cuando el state cambia
   useEffect( () => {
-    
-  }, [citas]); //para que no se cicle infinatamente, agregar arreglo vacío
+    if(citasIniciales){
+      localStorage.setItem('citas', JSON.stringify(citas))
+    } else{
+      localStorage.setItem('citas', JSON.stringify([]))
+    }
+  }, [citas, citasIniciales]); //para que no se cicle infinatamente, agregar arreglo vacío
   //O le puedes pasar una variable para que esté pendiente de su cambio
 
   //Funcion que tome las citas actuales y agregue la nueva
